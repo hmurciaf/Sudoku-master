@@ -1,6 +1,6 @@
 import com.murcia.utils.*;
 
-public class SudokuGame {
+public class SudokuPrincipal {
     private static ColaEnlazada<Sudoku> partidas;
 
     public static void main(String args[]) {
@@ -12,7 +12,6 @@ public class SudokuGame {
 
         do {
             Sudoku.clrscr(); // Borra pantalla
-            Consola.gotoxy(0, 0);
             opc = mnu.select("Su opción [1-6]: ");
             if (opc == '1') newGame();
             if (opc == '2') loadGame();
