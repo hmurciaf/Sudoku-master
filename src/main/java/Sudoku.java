@@ -4,28 +4,32 @@ public class Sudoku {
     private Tablero tablero;
     enum EstadoJuego {EN_CURSO, COMPLETADO, INVALIDO};
     private EstadoJuego estado;
+    private ColaEnlazadaDoble<Jugada> colaJugadas = new ColaEnlazadaDoble<>();
 
     public Sudoku() {
         tablero = new Tablero();
     }
 
     public void iniciarNuevoJuego() {
-        Consola.clrscr();
+        clrscr();
         String jugada = "";
         do {
-            Consola.clrscr(); Consola.gotoxy(0, 0);
+            clrscr();
             System.out.print(tablero);
-            do
-                jugada = Input.nextLine("\nJugada --> fila,columna,valor: ");
-            while (!jugada.matches("^[0-8],\\s*[0-8],\\s*[1-9]$"));
-
+            do {
+                jugada = Input.nextLine("\nJugada --> fila,columna,valor ('*'=FIN): ");
+                if (jugada.equals("*")) break;
+            } while (!jugada.matches("^[0-8],\\s*[0-8],\\s*[1-9]$"));
+            if (jugada.equals("*")) break;
             String[] partes = jugada.split(",\\s*");
             int [] numeros = new int[partes.length];
             for (int i = 0; i < partes.length; i++)
                 numeros[i] = Integer.parseInt(partes[i]);
             
-            if (tablero.esMovimientoValido(numeros[0], numeros[1], numeros[2]))
+            if (tablero.esMovimientoValido(numeros[0], numeros[1], numeros[2])) {
                 tablero.asignarValor(numeros[0], numeros[1], numeros[2]);
+                colaJugadas.encolar(new Jugada(numeros[0], numeros[1], numeros[2]));
+            }
         } while (true);
     }
 
@@ -42,5 +46,9 @@ public class Sudoku {
 
     public String toString() {
         return "";
+    }
+    public static void clrscr() {
+        for (int i = 0; i < 20; i++)
+            System.out.println();
     }
 }
