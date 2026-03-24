@@ -9,4 +9,8 @@ public class Jugada {
         this.col = col;
         this.value = value;
     }
+    @Override
+    public String toString() {
+        return col + "," + row + "," + value;
+    }
 }

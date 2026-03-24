@@ -6,7 +6,7 @@ public class Sudoku {
     private static Tablero tablero;
     enum EstadoJuego {EN_CURSO, COMPLETADO, INVALIDO};
     private EstadoJuego estado;
-    private ColaEnlazadaDoble<Jugada> colaJugadas = new ColaEnlazadaDoble<>();
+    private ColaEnlazadaDoble colaJugadas = new ColaEnlazadaDoble<Jugada>();
 
     public Sudoku() {
         tablero = new Tablero();

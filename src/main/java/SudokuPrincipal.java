@@ -1,7 +1,7 @@
 import com.murcia.utils.*;
 
 public class SudokuPrincipal {
-    private static ColaEnlazada<Sudoku> partidas;
+    private static ColaEnlazadaDoble partidas;
 
     public static void main(String args[]) {
         final char SALIR = '6';
@@ -22,7 +22,7 @@ public class SudokuPrincipal {
     }
     public static void newGame() {
         if (partidas == null) 
-            partidas = new ColaEnlazada<Sudoku>();
+            partidas = new ColaEnlazadaDoble<Sudoku>();
         Sudoku sudo = new Sudoku();
         sudo.iniciarNuevoJuego();
     }
