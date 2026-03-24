@@ -1,7 +1,9 @@
 import com.murcia.utils.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Sudoku {
-    private Tablero tablero;
+    private static Tablero tablero;
     enum EstadoJuego {EN_CURSO, COMPLETADO, INVALIDO};
     private EstadoJuego estado;
     private ColaEnlazadaDoble<Jugada> colaJugadas = new ColaEnlazadaDoble<>();
@@ -20,7 +22,13 @@ public class Sudoku {
                 jugada = Input.nextLine("\nJugada --> fila,columna,valor ('*'=FIN): ");
                 if (jugada.equals("*")) break;
             } while (!jugada.matches("^[0-8],\\s*[0-8],\\s*[1-9]$"));
-            if (jugada.equals("*")) break;
+            if (jugada.equals("*")) {
+                if (colaJugadas.size() < 81) {
+                    char cc = Input.nextChar("Partida en curso. Desea terminala? (S)i, (N)o: ", "()");
+                    if (cc != 'S' && cc != 's') continue;
+                }
+                break;
+            }
             String[] partes = jugada.split(",\\s*");
             int [] numeros = new int[partes.length];
             for (int i = 0; i < partes.length; i++)
@@ -31,6 +39,11 @@ public class Sudoku {
                 colaJugadas.encolar(new Jugada(numeros[0], numeros[1], numeros[2]));
             }
         } while (true);
+        try {
+            Archivo.writeFile("partida.txt", ",", colaJugadas);
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Sudoku.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void cargarTablero(Tablero tablero) {
