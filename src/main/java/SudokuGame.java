@@ -11,7 +11,7 @@ public class SudokuGame {
         char opc;
 
         do {
-            Consola.clrscr(); // Borra pantalla
+            Sudoku.clrscr(); // Borra pantalla
             Consola.gotoxy(0, 0);
             opc = mnu.select("Su opción [1-6]: ");
             if (opc == '1') newGame();
